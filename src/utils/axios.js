@@ -1,5 +1,4 @@
 import axios from "axios"
-import { Message } from "element-ui"
 
 const defaultConfig = {
   timeout: 5000,
@@ -26,10 +25,7 @@ axios.interceptors.response.use(
       const { data, status } = response
       data.status = status
       if (data.code < 0) {
-        Message.error({
-          message: `请求错误 ${data.code}`,
-          description: data.note,
-        })
+        console.log(`请求错误 ${data.code}`)
       }
       return data
     } catch {
