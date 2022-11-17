@@ -10,6 +10,11 @@ const routes: Array<RouteConfig> = [
     component: () => import("@/views/user/LoginView.vue"),
   },
   {
+    path: "/dashboard",
+    name: "dashboard",
+    component: () => import("@/views/dashboard/DashBoard.vue"),
+  },
+  {
     path: "/home",
     name: "home",
     component: () => import("@/views/HomeView.vue"),

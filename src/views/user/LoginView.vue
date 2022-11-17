@@ -1,4 +1,5 @@
 <script>
+import { testrequest } from "@/services/user"
 export default {
   name: "LoginView",
   data() {
@@ -16,8 +17,9 @@ export default {
       console.log(this.account, this.password, this.autoLogin)
       setTimeout(() => {
         this.loading = false
-        this.$router.push({ path: "/home" })
-      }, 1000)
+        testrequest()
+        // this.$router.push({ path: "/dashboard" })
+      }, 10)
     },
   },
 }
@@ -27,26 +29,23 @@ export default {
   <div class="main">
     <h1>{{ title }}</h1>
     <div>
-      <el-input
-        class="input"
-        v-model="account"
-        placeholder="请输入账号"
-      ></el-input>
-      <el-input
+      <input class="input" v-model="account" placeholder="请输入账号" />
+      <input
         class="input"
         placeholder="请输入密码"
         v-model="password"
         show-password
-      ></el-input>
+      />
     </div>
-    <el-checkbox v-model="autoLogin">自动登录</el-checkbox>
-    <el-button
+    <input type="checkbox" v-model="autoLogin" />自动登录
+    <button
       class="loginButton"
       type="primary"
       @click="login"
       :loading="loading"
-      >登录</el-button
     >
+      登录
+    </button>
   </div>
 </template>
 
