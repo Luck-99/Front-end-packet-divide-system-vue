@@ -18,7 +18,7 @@ export default {
     <div class="topContent">
       <div class="topTitle">{{ title }}</div>
       <div class="topAvatar">
-        <img :src="circleUrl" />
+        <el-avatar :src="circleUrl" />
         <span>{{ name }}</span>
       </div>
     </div>
