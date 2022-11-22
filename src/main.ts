@@ -5,6 +5,8 @@ import store from "./store"
 import Element from "element-ui"
 import "element-ui/lib/theme-chalk/index.css"
 
+import "@/assets/css/global.less"
+
 Vue.config.productionTip = false
 
 Vue.use(Element, { size: "small", zIndex: 3000 })
