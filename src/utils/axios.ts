@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const codeMessage = {
+const codeMessage: object | any = {
   200: "服务器成功返回请求的数据。",
   201: "新建或修改数据成功。",
   202: "一个请求已经进入后台排队（异步任务）。",
@@ -61,7 +61,7 @@ instance.interceptors.response.use(
     const {
       response: { status },
     } = error
-    // console.log(codeMessage[status:String])
+    error.msg = codeMessage[status]
     // 对响应错误做点什么
     return Promise.reject(error)
   }

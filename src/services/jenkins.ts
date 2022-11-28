@@ -1,4 +1,4 @@
-import { request } from "../utils/axios"
+import { request } from "@/utils/axios"
 
 export async function getAllJob(params: { tree: string }): Promise<any> {
   return request("/jenkins/getAllJob", {
