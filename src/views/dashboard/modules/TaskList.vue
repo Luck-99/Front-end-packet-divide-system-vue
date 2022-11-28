@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { getAllJob, buildJob } from "@/services/jenkins"
+import { getAllJobs, buildJob } from "@/services/jenkins"
 import { getTimeInterval } from "@/utils/utils"
 
 export default {
@@ -39,7 +39,7 @@ export default {
   methods: {
     getTimeInterval,
     getAllJenkinsJob: async function () {
-      const res = await getAllJob()
+      const res = await getAllJobs()
       if (res.code > 0) {
         this.allJobs = res.data
       }

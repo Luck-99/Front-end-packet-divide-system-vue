@@ -1,7 +1,7 @@
 import { request } from "@/utils/axios"
 
-export async function getAllJob(params: { tree: string }): Promise<any> {
-  return request("/jenkins/getAllJob", {
+export async function getAllJobs(params: { tree: string }): Promise<any> {
+  return request("/jenkins/getAllJobs", {
     method: "GET",
     params,
   })
