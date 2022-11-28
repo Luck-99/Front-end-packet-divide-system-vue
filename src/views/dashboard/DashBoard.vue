@@ -1,6 +1,15 @@
+<template>
+  <div class="main dash-board">
+    <top-title />
+    <div class="left">
+      <task-list />
+    </div>
+  </div>
+</template>
+
 <script>
-import TaskList from "./modules/TaskList.vue"
 import TopTitle from "./modules/TopTitle.vue"
+import TaskList from "./modules/TaskList.vue"
 export default {
   components: { TopTitle, TaskList },
   name: "DashBoard",
@@ -11,18 +20,9 @@ export default {
 }
 </script>
 
-<template>
-  <div class="main">
-    <top-title />
-    <div class="left">
-      <task-list />
-    </div>
-  </div>
-</template>
-
-<style lang="less" scoped>
-.main {
-  background-color: #f0f2f5;
+<style lang="less">
+.dash-board {
+  background: #f0f2f5;
   padding: 14px;
   .left {
     margin-top: 14px;

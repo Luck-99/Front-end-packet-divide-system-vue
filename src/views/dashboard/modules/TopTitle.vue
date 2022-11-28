@@ -1,3 +1,13 @@
+<template>
+  <div class="topContent">
+    <div class="topTitle">{{ title }}</div>
+    <div class="topAvatar">
+      <el-avatar :src="circleUrl" />
+      <span>{{ name }}</span>
+    </div>
+  </div>
+</template>
+
 <script>
 export default {
   name: "TopTitle",
@@ -12,16 +22,6 @@ export default {
   methods: {},
 }
 </script>
-
-<template>
-  <div class="topContent">
-    <div class="topTitle">{{ title }}</div>
-    <div class="topAvatar">
-      <el-avatar :src="circleUrl" />
-      <span>{{ name }}</span>
-    </div>
-  </div>
-</template>
 
 <style lang="less" scoped>
 .topContent {
