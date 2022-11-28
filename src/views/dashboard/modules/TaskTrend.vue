@@ -1,19 +1,17 @@
 <template>
   <div class="dash-borard-task-trend">
     <div class="top-title borderBottom">{{ title }}</div>
-    <div v-for="i in trendList" :key="i.id">
-      <div class="list-content borderBottom">
-        <el-avatar :src="i.avaUrl" :style="{ marginRight: '14px' }" />
+    <div v-for="i in trendList" :key="i.id" class="list-content borderBottom">
+      <el-avatar :src="i.avaUrl" :style="{ marginRight: '14px' }" />
+      <div>
         <div>
-          <div>
-            <span>{{ i.name }}</span
-            ><span>{{ i.env ? ` 在 ${i.env}` : "" }}</span>
-            <span>{{ ` ${i.actionDec} ` }}</span>
-            <span>{{ i.action }}</span>
-          </div>
-          <div class="list-time">
-            {{ getTimeInterval(i.lasttimestamp) }}
-          </div>
+          <span>{{ i.name }}</span
+          ><span>{{ i.env ? ` 在 ${i.env}` : "" }}</span>
+          <span>{{ ` ${i.actionDec} ` }}</span>
+          <span>{{ i.action }}</span>
+        </div>
+        <div class="list-time">
+          {{ getTimeInterval(i.lasttimestamp) }}
         </div>
       </div>
     </div>
