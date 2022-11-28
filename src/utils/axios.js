@@ -24,10 +24,13 @@ const defaultConfig = {
   baseURL: "",
 }
 
+const instance = axios.create()
+
 // 添加请求拦截器
-axios.interceptors.request.use(
+instance.interceptors.request.use(
   (config) => {
     // 在发送请求之前做些什么
+    console.log(config)
     return config
   },
   (error) => {
@@ -37,7 +40,7 @@ axios.interceptors.request.use(
 )
 
 // 添加响应拦截器
-axios.interceptors.response.use(
+instance.interceptors.response.use(
   (response) => {
     // 2xx 范围内的状态码都会触发该函数。
     // 对响应数据做点什么
@@ -48,7 +51,7 @@ axios.interceptors.response.use(
         console.log(`请求错误 ${data.code}`)
       }
       return data
-    } catch {
+    } catch (e) {
       // 非标准http报文
       return response
     }
@@ -63,8 +66,8 @@ axios.interceptors.response.use(
     return Promise.reject(error)
   }
 )
+
 export const request = (url, options) => {
-  const instance = axios.create()
   options = Object.assign(defaultConfig, options)
   return instance(url, options)
 }
