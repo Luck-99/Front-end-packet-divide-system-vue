@@ -1,13 +1,13 @@
 <template>
   <div class="dash-borard-task-list">
-    <div class="topTitle borderBottom">{{ title }}</div>
+    <div class="top-title borderBottom">{{ title }}</div>
     <el-table :data="allJobs" :show-header="false">
       <el-table-column prop="" label="占位用的" width="10px"> </el-table-column>
       <el-table-column prop="description" label="描述"> </el-table-column>
       <el-table-column prop="fullName" label="全称"> </el-table-column>
       <el-table-column prop="lastBuild.timestamp" label="时间">
         <template slot-scope="scope">
-          {{ getTime(scope.row.lastBuild.timestamp) }}
+          {{ getTimeInterval(scope.row.lastBuild.timestamp) }}
         </template> </el-table-column
       ><el-table-column fixed="right" label="操作" width="100">
         <template slot-scope="scope">
@@ -24,6 +24,8 @@
 
 <script>
 import { getAllJob, buildJob } from "@/services/jenkins"
+import { getTimeInterval } from "@/utils/utils"
+
 export default {
   components: {},
   name: "TaskList",
@@ -35,6 +37,7 @@ export default {
     }
   },
   methods: {
+    getTimeInterval,
     getAllJenkinsJob: async function () {
       const res = await getAllJob()
       if (res.code > 0) {
@@ -56,27 +59,6 @@ export default {
         this.timer = null
       }, 1000)
     },
-    getTime: function (time) {
-      const now = new Date().getTime()
-      const timeDifference = (now - time) / 1000
-      const day =
-        Math.floor(timeDifference / (60 * 60 * 24)) > 0
-          ? `${Math.floor(timeDifference / (60 * 60 * 24))} 天前`
-          : null
-      const hour =
-        Math.floor(timeDifference / (60 * 60)) > 0
-          ? `${Math.floor(timeDifference / (60 * 60))} 小时前`
-          : null
-      const min =
-        Math.floor(timeDifference / 60) > 0
-          ? `${Math.floor(timeDifference / 60)} 分钟前`
-          : null
-      const second =
-        Math.floor(timeDifference) > 0
-          ? `${Math.floor(timeDifference)} 秒前`
-          : null
-      return day ?? hour ?? min ?? second
-    },
   },
   mounted() {
     this.getAllJenkinsJob()
@@ -91,7 +73,7 @@ export default {
     padding: 5px;
     font-size: 1.25rem;
   }
-  .topTitle {
+  .top-title {
     text-align: left;
     padding: 14px;
   }
