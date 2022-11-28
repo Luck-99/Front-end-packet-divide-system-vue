@@ -61,13 +61,13 @@ instance.interceptors.response.use(
     const {
       response: { status },
     } = error
-    console.log(codeMessage[status])
+    // console.log(codeMessage[status:String])
     // 对响应错误做点什么
     return Promise.reject(error)
   }
 )
 
-export const request = (url, options) => {
+export const request = (url: string, options: object) => {
   options = Object.assign(defaultConfig, options)
   return instance(url, options)
 }
