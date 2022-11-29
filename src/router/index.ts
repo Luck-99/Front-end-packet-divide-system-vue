@@ -10,9 +10,14 @@ const routes: Array<RouteConfig> = [
     component: () => import("@/views/user/LoginView.vue"),
   },
   {
-    path: "/dashboard",
-    name: "dashboard",
-    component: () => import("@/views/dashboard/DashBoard.vue"),
+    path: "/dashBoard",
+    name: "dashBoard",
+    component: () => import("@/views/dashBoard/DashBoard.vue"),
+  },
+  {
+    path: "/taskSetting",
+    name: "taskSetting",
+    component: () => import("@/views/taskSetting/TaskSetting.vue"),
   },
   {
     path: "/home",
