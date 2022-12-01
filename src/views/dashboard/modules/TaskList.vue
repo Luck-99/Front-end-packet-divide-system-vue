@@ -38,13 +38,13 @@ export default {
   },
   methods: {
     getTimeInterval,
-    getAllJenkinsJob: async function () {
+    async getAllJenkinsJob() {
       const res = await getAllJobs()
       if (res.code > 0) {
         this.allJobs = res.data
       }
     },
-    handleBuildClick: function (name) {
+    handleBuildClick(name) {
       this.timer && clearTimeout(this.timer)
       this.timer = setTimeout(async () => {
         const res = await buildJob({ name })
@@ -59,7 +59,7 @@ export default {
         this.timer = null
       }, 1000)
     },
-    handleRowClick: function (row, column, event) {
+    handleRowClick(row, column, event) {
       const { fullName } = row
       this.$router.push({ path: "/TaskSetting" })
     },

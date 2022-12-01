@@ -34,7 +34,7 @@ export default {
     }
   },
   methods: {
-    getAllPackages: async function () {
+    async getAllPackages() {
       const res = await getAllPackages()
       if (res.code > 0) {
         this.allPackages = res.data.filter((item) =>
@@ -42,7 +42,7 @@ export default {
         )
       }
     },
-    getPackageInfo: async function (show, name) {
+    async getPackageInfo(show, name) {
       if (show && !this.options[name]) {
         this.selectLoading = true
         const res = await getPackageInfo({ name })

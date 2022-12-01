@@ -31,7 +31,7 @@ export default {
     }
   },
   methods: {
-    login: function () {
+    login() {
       this.loading = true
       setTimeout(() => {
         this.loading = false
@@ -54,7 +54,7 @@ export default {
       }
       Ball.prototype = {
         //绘制小球
-        draw: function () {
+        draw() {
           ctx.beginPath()
           ctx.globalAlpha = 1
           ctx.fillStyle = this.color
@@ -62,7 +62,7 @@ export default {
           ctx.fill()
         },
         //小球移动
-        move: function () {
+        move() {
           this.x += this.speedX
           this.y += this.speedY
           //为了合理性,设置极限值

@@ -9,7 +9,7 @@
 export default {
   name: "BottomButton",
   methods: {
-    handleApplyConfig: function () {
+    handleApplyConfig() {
       console.log("应用配置")
     },
   },
