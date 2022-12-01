@@ -1,7 +1,7 @@
 <template>
   <div class="dash-borard-task-list">
     <div class="top-title borderBottom">{{ title }}</div>
-    <el-table :data="allJobs" :show-header="false">
+    <el-table :data="allJobs" :show-header="false" @row-click="handleRowClick">
       <el-table-column prop="" label="占位用的" width="10px"> </el-table-column>
       <el-table-column prop="description" label="描述"> </el-table-column>
       <el-table-column prop="fullName" label="全称"> </el-table-column>
@@ -58,6 +58,10 @@ export default {
         }
         this.timer = null
       }, 1000)
+    },
+    handleRowClick: function (row, column, event) {
+      const { fullName } = row
+      this.$router.push({ path: "/TaskSetting" })
     },
   },
   mounted() {
