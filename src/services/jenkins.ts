@@ -25,6 +25,21 @@ export async function buildJob(params: { name: string }): Promise<any> {
 }
 
 /**
+ * 参数化构建任务
+ * @param params:{name} 构建任务 传入任务名称 projectName:传入参数
+ * @returns 构建成功信息
+ */
+export async function buildWithParameters(params: {
+  name: string
+  projectName: string
+}): Promise<any> {
+  return request("/jenkins/buildWithParameters", {
+    method: "GET",
+    params,
+  })
+}
+
+/**
  * 获取任务详情
  * @param params {name：任务名称，tree：用于筛选}
  * @returns 任务详情
@@ -36,5 +51,21 @@ export async function getJobInfo(params: {
   return request("/jenkins/getJobInfo", {
     method: "GET",
     params,
+  })
+}
+
+/**
+ * 下载打包文件
+ * @param params {jobName:项目名称，downloadTarget:下载目标文件(名)}
+ * @returns
+ */
+export async function downloadFile(params: {
+  jobName: string
+  downloadTarget?: string
+}): Promise<any> {
+  return request("/jenkins/downloadFile", {
+    method: "GET",
+    params,
+    responseType: "blob",
   })
 }
