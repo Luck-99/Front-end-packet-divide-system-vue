@@ -29,3 +29,19 @@ export const getTimeInterval = (time) => {
   const second = `${Math.floor(timeDifference)} 秒前`
   return year ?? month ?? day ?? hour ?? min ?? second
 }
+
+/**
+ * 用于下载文件
+ * @param {*} file 二进制文件流
+ * @param {*} fileName 文件名称
+ */
+export const downLoadFile = (file, fileName) => {
+  const blob = new Blob([file])
+  const url = window.URL.createObjectURL(blob) // 创建一个临时的url指向blob对象
+  const link = document.createElement("a")
+  link.href = url
+  link.download = fileName
+  link.click()
+  link.remove()
+  window.URL.revokeObjectURL(url)
+}
