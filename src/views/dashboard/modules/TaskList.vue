@@ -13,8 +13,17 @@
         <template slot-scope="scope">
           <el-button
             icon="el-icon-video-play"
+            title="构建项目"
             circle
-            @click="handleBuildClick(scope.row.fullName)"
+            :loading="buttonLoading"
+            @click.stop="handleBuildClick(scope.row.fullName)"
+          ></el-button>
+          <el-button
+            icon="el-icon-download"
+            circle
+            title="下载文件"
+            :loading="buttonLoading"
+            @click.stop="handleDownLoadClick(scope.row.fullName)"
           ></el-button>
         </template>
       </el-table-column>
@@ -23,8 +32,12 @@
 </template>
 
 <script>
-import { getAllJobs, buildJob } from "@/services/jenkins"
-import { getTimeInterval } from "@/utils/utils"
+import {
+  getAllJobs,
+  downloadFile,
+  buildWithParameters,
+} from "@/services/jenkins"
+import { downLoadFile, getTimeInterval } from "@/utils/utils"
 
 export default {
   components: {},
@@ -34,6 +47,7 @@ export default {
       title: "任务列表",
       allJobs: [],
       timer: null,
+      buttonLoading: false,
     }
   },
   methods: {
@@ -47,7 +61,7 @@ export default {
     handleBuildClick(name) {
       this.timer && clearTimeout(this.timer)
       this.timer = setTimeout(async () => {
-        const res = await buildJob({ name })
+        const res = await buildWithParameters({ name })
         if (res.code > 0) {
           this.$message({
             message: "构建成功",
@@ -59,13 +73,24 @@ export default {
         this.timer = null
       }, 1000)
     },
+    async handleDownLoadClick(name) {
+      const res = await downloadFile({ name })
+      downLoadFile(res, `${name}.zip`)
+    },
     handleRowClick(row, column, event) {
       const { fullName } = row
       this.$router.push({ path: "/TaskSetting" })
     },
   },
+
   mounted() {
     this.getAllJenkinsJob()
+  },
+  sockets: {
+    jenkinsAllJobs: function (allJobs) {
+      this.allJobs = [...allJobs]
+      console.log(allJobs)
+    },
   },
 }
 </script>
