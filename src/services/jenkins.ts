@@ -57,7 +57,7 @@ export async function getJobInfo(params: {
 /**
  * 下载打包文件
  * @param params {jobName:项目名称，downloadTarget:下载目标文件(名)}
- * @returns
+ * @returns 文件流
  */
 export async function downloadFile(params: {
   jobName: string
@@ -67,5 +67,17 @@ export async function downloadFile(params: {
     method: "GET",
     params,
     responseType: "blob",
+  })
+}
+
+/**
+ * 用于停止正在构建的项目
+ * @param params id: 项目构建id
+ * @returns
+ */
+export async function stopBuildJob(params: { id: string }): Promise<any> {
+  return request("/jenkins/stopBuildJob", {
+    method: "GET",
+    params,
   })
 }
