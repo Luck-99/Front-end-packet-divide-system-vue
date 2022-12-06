@@ -3,7 +3,7 @@
  * @param {number} time 时间
  * @returns 时间差
  */
-export const getTimeInterval = (time) => {
+export const getTimeGap = (time) => {
   const now = new Date().getTime()
   const timeDifference = (now - time) / 1000
   const year =
