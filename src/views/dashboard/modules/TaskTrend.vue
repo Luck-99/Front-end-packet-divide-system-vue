@@ -11,7 +11,7 @@
           <span>{{ i.action }}</span>
         </div>
         <div class="list-time">
-          {{ getTimeInterval(i.lasttimestamp) }}
+          {{ getTimeGap(i.lasttimestamp) }}
         </div>
       </div>
     </div>
@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { getTimeInterval } from "@/utils/utils"
+import { getTimeGap } from "@/utils/utils"
 
 export default {
   components: {},
@@ -51,7 +51,7 @@ export default {
       ],
     }
   },
-  methods: { getTimeInterval },
+  methods: { getTimeGap },
   mounted() {
     console.log(11)
   },
