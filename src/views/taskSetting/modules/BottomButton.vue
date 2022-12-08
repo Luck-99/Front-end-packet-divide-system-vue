@@ -6,10 +6,18 @@
 </template>
 
 <script>
+import { writeEnv } from "@/services/file"
 export default {
   name: "BottomButton",
   methods: {
-    handleApplyConfig() {
+    async handleApplyConfig() {
+      const res = await writeEnv({
+        depData: {},
+        envName: "env_xingye",
+      })
+      if (res.code > 0) {
+        this.$message.success("修改成功")
+      }
       console.log("应用配置")
     },
   },
