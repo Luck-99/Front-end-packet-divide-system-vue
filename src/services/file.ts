@@ -11,3 +11,18 @@ export async function getProjects(params: null): Promise<any> {
     params,
   })
 }
+
+/**
+ * 写入项目配置信息
+ * @param params depData 依赖数据 | envName 项目名称
+ * @returns
+ */
+export async function writeEnv(params: {
+  depData: object
+  envName: string
+}): Promise<any> {
+  return request("/file/writeEnv", {
+    method: "POST",
+    data: params,
+  })
+}
