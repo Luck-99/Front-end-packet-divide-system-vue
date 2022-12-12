@@ -62,15 +62,16 @@ export default {
         this.allJobs = res.data
       }
     },
-    handleBuildClick(name) {
+    handleBuildClick(projectName) {
       this.timer && clearTimeout(this.timer)
       this.timer = setTimeout(async () => {
-        const res = await buildWithParameters({ name })
+        const res = await buildWithParameters({ projectName })
         if (res.code > 0) {
           this.$message({
             message: "构建成功",
             type: "success",
           })
+          this.getAllProjects()
         } else {
           this.$message.error(res.msg)
         }
