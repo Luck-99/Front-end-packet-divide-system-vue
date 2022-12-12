@@ -58,6 +58,18 @@ export default {
   mounted() {
     this.getAllPackages()
   },
+  watch: {
+    allPackages: {
+      deep: true,
+      handler(val) {
+        const tempPackages = {}
+        val.forEach((item) => {
+          tempPackages[item.name] = item.version
+        })
+        this.$store.commit("setPackageList", tempPackages)
+      },
+    },
+  },
 }
 </script>
 
