@@ -50,7 +50,6 @@ export default {
     return {
       title: "任务列表",
       allJobs: [],
-      timer: null,
       buttonLoading: false,
     }
   },
@@ -62,21 +61,17 @@ export default {
         this.allJobs = res.data
       }
     },
-    handleBuildClick(projectName) {
-      this.timer && clearTimeout(this.timer)
-      this.timer = setTimeout(async () => {
-        const res = await buildWithParameters({ projectName })
-        if (res.code > 0) {
-          this.$message({
-            message: "构建成功",
-            type: "success",
-          })
-          this.getAllProjects()
-        } else {
-          this.$message.error(res.msg)
-        }
-        this.timer = null
-      }, 1000)
+    async handleBuildClick(projectName) {
+      const res = await buildWithParameters({ projectName })
+      if (res.code > 0) {
+        this.$message({
+          message: "构建成功",
+          type: "success",
+        })
+        this.getAllProjects()
+      } else {
+        this.$message.error(res.msg)
+      }
     },
     async handleDownLoadClick(name) {
       const res = await downloadFile({ name })
@@ -92,8 +87,11 @@ export default {
     this.getAllProjects()
   },
   sockets: {
-    jenkinsAllJobs: function (allJobs) {
+    jenkinsAllJobs(allJobs) {
       this.allJobs = JSON.parse(allJobs)
+    },
+    jenkinsFileDownLoad(env) {
+      this.handleDownLoadClick(env)
     },
   },
 }
