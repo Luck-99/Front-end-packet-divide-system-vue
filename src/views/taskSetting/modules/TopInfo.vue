@@ -4,9 +4,13 @@
       <el-avatar :src="avaUrl" :style="{ marginRight: '14px' }" />
     </div>
     <div class="info">
-      <div>{{ envName }}</div>
-      <div>创建人: {{ personName }}</div>
-      <div>创建时间：{{ creatTime }}</div>
+      <div>{{ envInfo.description }}</div>
+      <div>创建人: {{ envInfo.creatBy }}</div>
+      <div>
+        创建时间：{{
+          new Date(envInfo.creatTime).toLocaleDateString().replace(/\//g, "-")
+        }}
+      </div>
     </div>
   </div>
 </template>
@@ -22,6 +26,7 @@ export default {
   },
   data() {
     return {
+      envInfo: this.$store.getters.envInfo,
       title: "配置",
       avaUrl:
         "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",

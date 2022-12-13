@@ -23,6 +23,7 @@
 
 <script>
 import { getAllPackages, getPackageInfo } from "@/services/verdaccio"
+import { getEnvDeps } from "@/services/file"
 export default {
   name: "VersionSelection",
   data() {
@@ -35,11 +36,25 @@ export default {
   },
   methods: {
     async getAllPackages() {
-      const res = await getAllPackages()
-      if (res.code > 0) {
-        this.allPackages = res.data.filter((item) =>
+      const packageRes = await getAllPackages()
+      const tempEnvRes = await getEnvDeps({
+        key: this.$store.getters.envInfo.key,
+      })
+      if (packageRes.code > 0) {
+        this.allPackages = packageRes.data.filter((item) =>
           item.name.includes("@zglib/product")
         )
+      }
+      if (tempEnvRes.code > 0) {
+        for (const [key, value] of Object.entries(tempEnvRes.data)) {
+          this.allPackages = this.allPackages.map((item) => {
+            const tempObj = { ...item }
+            if (tempObj.name === key) {
+              tempObj.version = value
+            }
+            return tempObj
+          })
+        }
       }
     },
     async getPackageInfo(show, name) {

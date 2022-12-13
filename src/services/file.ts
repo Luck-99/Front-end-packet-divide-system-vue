@@ -26,3 +26,15 @@ export async function writeEnv(params: {
     data: params,
   })
 }
+
+/**
+ * 获取项目对应依赖信息
+ * @param params key 项目名
+ * @returns
+ */
+export async function getEnvDeps(params: { key: string }): Promise<any> {
+  return request("/file/getEnvDeps", {
+    method: "GET",
+    params,
+  })
+}
