@@ -1,19 +1,26 @@
 <template>
   <div class="dash-borard-task-trend">
     <div class="top-title borderBottom">{{ title }}</div>
-    <div v-for="i in recordList" :key="i.id" class="list-content borderBottom">
-      <el-avatar :src="i.avaUrl" :style="{ marginRight: '14px' }" />
-      <div>
+    <div class="dash-borard-task-trend-list">
+      <div
+        v-for="i in recordList"
+        :key="i.id"
+        class="list-content borderBottom"
+      >
+        <el-avatar :src="i.avaUrl" :style="{ marginRight: '14px' }" />
         <div>
-          <span>{{ i.userName }}</span
-          ><span v-if="i.envName"
-            >{{ ` 在 ` }}<span class="primaryColor">{{ i.envName }}</span></span
-          >
-          <span>{{ ` ${i.actionDec} ` }}</span>
-          <span class="primaryColor">{{ i.action }}</span>
-        </div>
-        <div class="list-time">
-          {{ getTimeGap(i.time) }}
+          <div>
+            <span>{{ i.userName }}</span
+            ><span v-if="i.envName"
+              >{{ ` 在 `
+              }}<span class="primaryColor">{{ i.envName }}</span></span
+            >
+            <span>{{ ` ${i.actionDec} ` }}</span>
+            <span class="primaryColor">{{ i.action }}</span>
+          </div>
+          <div class="list-time">
+            {{ getTimeGap(i.time) }}
+          </div>
         </div>
       </div>
     </div>
@@ -60,12 +67,19 @@ export default {
     text-align: left;
     padding: 14px;
   }
-  .list-content {
-    display: flex;
-    padding: 14px;
-    .list-time {
-      text-align: start;
-      color: #a5a5a5;
+  .dash-borard-task-trend-list {
+    max-height: 40vh;
+    overflow: scroll;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    .list-content {
+      display: flex;
+      padding: 14px;
+      .list-time {
+        text-align: start;
+        color: #a5a5a5;
+      }
     }
   }
 }
