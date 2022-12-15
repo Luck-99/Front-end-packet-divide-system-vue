@@ -19,11 +19,6 @@
 export default {
   components: {},
   name: "TopInfo",
-  props: {
-    envName: String,
-    personName: String,
-    creatTime: String,
-  },
   data() {
     return {
       envInfo: this.$store.getters.envInfo,
