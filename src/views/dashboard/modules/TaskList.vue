@@ -1,10 +1,10 @@
 <template>
   <div class="dash-borard-task-list">
     <div class="top-title borderBottom">{{ title }}</div>
-    <el-table :data="allJobs" :show-header="false" @row-click="handleRowClick">
+    <el-table :data="allJobs" :show-header="false">
       <el-table-column prop="" label="占位用的" width="10px"> </el-table-column>
       <el-table-column prop="description" label="描述"> </el-table-column>
-      <el-table-column prop="builtOn" label="构建用户"> </el-table-column>
+      <el-table-column prop="builtBy" label="构建用户"></el-table-column>
       <el-table-column prop="" label="时间">
         <template slot-scope="scope">
           <span v-if="!scope.row.building">{{
@@ -14,7 +14,7 @@
           }}</span>
           <span v-else>{{ "构建中" }}</span>
         </template> </el-table-column
-      ><el-table-column fixed="right" label="操作" width="100">
+      ><el-table-column fixed="right" label="操作" width="150">
         <template slot-scope="scope">
           <el-button
             icon="el-icon-video-play"
@@ -23,14 +23,30 @@
             class="primaryColor"
             :loading="scope.row.building"
             :disabled="!scope.row.buildable"
+            v-show="!scope.row.building"
             @click.stop="handleBuildClick(scope.row.key)"
+          ></el-button>
+          <el-button
+            icon="el-icon-circle-close"
+            circle
+            title="停止构建"
+            style="color: red"
+            v-show="scope.row.building"
+            :disabled="!scope.row.building"
+            @click.stop="handleStopBuildJob(scope.row.id)"
           ></el-button>
           <el-button
             icon="el-icon-download"
             circle
             title="下载文件"
             :loading="scope.row.building"
-            @click.stop="handleDownLoadClick(scope.row.key)"
+            @click.stop="handleDownLoadClick(scope.row.description)"
+          ></el-button>
+          <el-button
+            icon="el-icon-edit"
+            circle
+            title="编辑环境"
+            @click.stop="handleEditEnvClick(scope.row)"
           ></el-button>
         </template>
       </el-table-column>
@@ -39,7 +55,11 @@
 </template>
 
 <script>
-import { downloadFile, buildWithParameters } from "@/services/jenkins"
+import {
+  downloadFile,
+  buildWithParameters,
+  stopBuildJob,
+} from "@/services/jenkins"
 import { getProjects } from "@/services/file"
 import { downLoadFile, getTimeGap } from "@/utils/utils"
 
@@ -50,7 +70,6 @@ export default {
     return {
       title: "任务列表",
       allJobs: [],
-      buttonLoading: false,
     }
   },
   methods: {
@@ -64,21 +83,26 @@ export default {
     async handleBuildClick(projectName) {
       const res = await buildWithParameters({ projectName })
       if (res.code > 0) {
-        this.$message({
-          message: "构建成功",
-          type: "success",
-        })
         this.getAllProjects()
-      } else {
-        this.$message.error(res.msg)
       }
+      this.$message({
+        message: res.msg,
+        type: res.code > 0 ? "success" : "error",
+      })
     },
     async handleDownLoadClick(name) {
-      const res = await downloadFile({ name })
+      const res = await downloadFile()
       downLoadFile(res, `${name}.zip`)
     },
-    handleRowClick(row, column, event) {
-      const { fullName } = row
+    async handleStopBuildJob(id) {
+      const res = await stopBuildJob({ id })
+      this.$message({
+        message: res.msg,
+        type: res.code > 0 ? "success" : "error",
+      })
+    },
+    handleEditEnvClick(row, column, event) {
+      this.$store.commit("setEnvInfo", row)
       this.$router.push({ path: "/TaskSetting" })
     },
   },
@@ -103,6 +127,9 @@ export default {
   .el-button--small.is-circle {
     padding: 5px;
     font-size: 1.25rem;
+    &:first-child {
+      margin-left: 10px;
+    }
   }
   .top-title {
     text-align: left;
