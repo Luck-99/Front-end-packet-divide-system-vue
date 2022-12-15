@@ -2,7 +2,7 @@
   <div class="main">
     <canvas
       id="myCanvas"
-      style="background: linear-gradient(#a3b4f8, #f1f2f6)"
+      style="background: linear-gradient(#8cc5ff, #d9ecff)"
     ></canvas>
     <div class="content">
       <h2>{{ title }}</h2>
