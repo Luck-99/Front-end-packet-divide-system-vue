@@ -1,7 +1,7 @@
 <template>
   <div class="dash-borard-task-trend">
     <div class="top-title borderBottom">{{ title }}</div>
-    <div v-for="i in trendList" :key="i.id" class="list-content borderBottom">
+    <div v-for="i in recordList" :key="i.id" class="list-content borderBottom">
       <el-avatar :src="i.avaUrl" :style="{ marginRight: '14px' }" />
       <div>
         <div>
@@ -22,7 +22,7 @@
 
 <script>
 import { getTimeGap } from "@/utils/utils"
-import { getActionList } from "@/services/file"
+import { getActionRecordList } from "@/services/file"
 
 export default {
   components: {},
@@ -30,15 +30,15 @@ export default {
   data() {
     return {
       title: "动态",
-      trendList: [],
+      recordList: [],
     }
   },
   methods: {
     getTimeGap,
     async getActionLists() {
-      const res = await getActionList()
+      const res = await getActionRecordList()
       if (res.code > 0) {
-        this.trendList = res.data
+        this.recordList = res.data
       }
     },
   },
@@ -46,8 +46,8 @@ export default {
     this.getActionLists()
   },
   sockets: {
-    actionLists(lists) {
-      this.trendList = JSON.parse(lists)
+    actionRecordLists(lists) {
+      this.recordList = JSON.parse(lists)
     },
   },
 }

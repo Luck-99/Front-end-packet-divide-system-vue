@@ -43,8 +43,8 @@ export async function getEnvDeps(params: { key: string }): Promise<any> {
  * 获取项目操作记录
  * @returns 操作记录
  */
-export async function getActionList(): Promise<any> {
-  return request("/file/getActionList", {
+export async function getActionRecordList(): Promise<any> {
+  return request("/file/getActionRecordList", {
     method: "GET",
   })
 }
