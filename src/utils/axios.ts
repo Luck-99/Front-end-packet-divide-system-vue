@@ -20,7 +20,7 @@ const codeMessage: object | any = {
 }
 
 const defaultConfig = {
-  timeout: 10000,
+  timeout: 120000,
   baseURL: "",
 }
 
