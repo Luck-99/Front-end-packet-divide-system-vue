@@ -11,14 +11,21 @@ export default {
   name: "BottomButton",
   methods: {
     async handleApplyConfig() {
-      const res = await writeEnv({
-        depData: {},
-        envName: "env_xingye",
+      const loading = this.$loading({
+        lock: true,
+        text: "正在更改配置中。。。",
+        spinner: "el-icon-loading",
+        background: "rgba(0, 0, 0, 0.7)",
       })
-      if (res.code > 0) {
-        this.$message.success("修改成功")
-      }
-      console.log("应用配置")
+      const res = await writeEnv({
+        depData: this.$store.getters.packageList,
+        envName: this.$store.getters.envInfo.key,
+      })
+      this.$message({
+        message: res.msg,
+        type: res.code > 0 ? "success" : "error",
+      })
+      loading.close()
     },
   },
 }
