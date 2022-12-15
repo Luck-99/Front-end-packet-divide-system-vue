@@ -30,11 +30,21 @@ export async function writeEnv(params: {
 /**
  * 获取项目对应依赖信息
  * @param params key 项目名
- * @returns
+ * @returns 项目对应依赖信息
  */
 export async function getEnvDeps(params: { key: string }): Promise<any> {
   return request("/file/getEnvDeps", {
     method: "GET",
     params,
+  })
+}
+
+/**
+ * 获取项目操作记录
+ * @returns 操作记录
+ */
+export async function getActionList(): Promise<any> {
+  return request("/file/getActionList", {
+    method: "GET",
   })
 }

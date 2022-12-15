@@ -5,13 +5,15 @@
       <el-avatar :src="i.avaUrl" :style="{ marginRight: '14px' }" />
       <div>
         <div>
-          <span>{{ i.name }}</span
-          ><span>{{ i.env ? ` 在 ${i.env}` : "" }}</span>
+          <span>{{ i.userName }}</span
+          ><span v-if="i.envName"
+            >{{ ` 在 ` }}<span class="primaryColor">{{ i.envName }}</span></span
+          >
           <span>{{ ` ${i.actionDec} ` }}</span>
-          <span>{{ i.action }}</span>
+          <span class="primaryColor">{{ i.action }}</span>
         </div>
         <div class="list-time">
-          {{ getTimeGap(i.lasttimestamp) }}
+          {{ getTimeGap(i.time) }}
         </div>
       </div>
     </div>
@@ -20,6 +22,7 @@
 
 <script>
 import { getTimeGap } from "@/utils/utils"
+import { getActionList } from "@/services/file"
 
 export default {
   components: {},
@@ -27,33 +30,25 @@ export default {
   data() {
     return {
       title: "动态",
-      trendList: [
-        {
-          id: 1,
-          avaUrl:
-            "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
-          name: "东东",
-          env: "开发环境",
-          actionDec: "进行了",
-          action: "构建",
-          lasttimestamp: new Date() - 1000 * 60 * Math.random(),
-        },
-        {
-          id: 2,
-          avaUrl:
-            "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
-          name: "东东",
-          env: "",
-          actionDec: "新增了",
-          action: "开发环境",
-          lasttimestamp: new Date() - 1000 * 60 * 60 * Math.random(),
-        },
-      ],
+      trendList: [],
     }
   },
-  methods: { getTimeGap },
+  methods: {
+    getTimeGap,
+    async getActionLists() {
+      const res = await getActionList()
+      if (res.code > 0) {
+        this.trendList = res.data
+      }
+    },
+  },
   mounted() {
-    console.log(11)
+    this.getActionLists()
+  },
+  sockets: {
+    actionLists(lists) {
+      this.trendList = JSON.parse(lists)
+    },
   },
 }
 </script>
