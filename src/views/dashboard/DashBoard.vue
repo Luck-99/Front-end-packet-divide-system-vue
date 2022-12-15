@@ -42,7 +42,7 @@ export default {
       }
     }
     .right {
-      min-width: 200px;
+      width: 200px;
     }
     & > * {
       margin-top: 14px;
