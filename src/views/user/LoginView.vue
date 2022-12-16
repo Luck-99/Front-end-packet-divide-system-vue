@@ -2,16 +2,30 @@
   <div class="main">
     <canvas
       id="myCanvas"
-      style="background: linear-gradient(#8cc5ff, #d9ecff)"
+      style="background: linear-gradient(#8cc5ff, #d9ecff); display: block"
     ></canvas>
     <div class="content">
       <h2>{{ title }}</h2>
-      <el-input v-model="user.username" placeholder="请输入账号"></el-input>
-      <el-input placeholder="请输入密码" v-model="user.password"></el-input>
-      <!-- <el-checkbox v-model="autoLogin">自动登录</el-checkbox> -->
-      <el-button type="primary" @click="login" :loading="loading"
-        >登录</el-button
-      >
+      <el-form :model="user" status-icon :rules="rules" ref="userForm">
+        <el-form-item label="" prop="username">
+          <el-input v-model="user.username" placeholder="请输入账号"></el-input>
+        </el-form-item>
+        <el-form-item label="" prop="password">
+          <el-input
+            type="password"
+            placeholder="请输入密码"
+            v-model="user.password"
+          ></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button
+            type="primary"
+            @click="login('userForm')"
+            :loading="loading"
+            >提交</el-button
+          >
+        </el-form-item>
+      </el-form>
     </div>
   </div>
 </template>
@@ -26,17 +40,31 @@ export default {
         username: "",
         password: "",
       },
-      autoLogin: "",
       loading: false,
+      rules: {
+        username: [
+          { required: true, trigger: "blur", message: "账号不能为空！" },
+        ],
+        password: [
+          { required: true, trigger: "blur", message: "密码不能为空！" },
+        ],
+      },
     }
   },
   methods: {
-    login() {
-      this.loading = true
-      setTimeout(() => {
-        this.loading = false
-        this.$router.push({ path: "/DashBoard" })
-      }, 1000)
+    login(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          this.loading = true
+          // console.log(this.user.username, this.user.password)
+          setTimeout(() => {
+            this.loading = false
+            this.$router.push({ path: "/DashBoard" })
+          }, 1000)
+        } else {
+          return false
+        }
+      })
     },
     getCanvas() {
       const canvas = document.getElementById("myCanvas")
@@ -170,7 +198,9 @@ export default {
 .main {
   inset: 0;
   position: absolute;
-  display: flex;
+  ::-webkit-scrollbar {
+    display: none;
+  }
   .content {
     width: 400px;
     height: 240px;
@@ -181,11 +211,12 @@ export default {
     border-radius: 10px;
     transform: translate(-50%, -50%);
     padding-bottom: 15px;
-  }
-  .el-input,
-  .el-button {
-    width: 85%;
-    margin: 14px;
+    .el-form-item {
+      padding: 7px 10% 0;
+    }
+    .el-button--small {
+      width: 100%;
+    }
   }
 }
 </style>
