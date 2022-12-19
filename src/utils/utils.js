@@ -8,11 +8,15 @@ export const getTimeGap = (time) => {
   const timeDifference = (now - time) / 1000
   const year =
     Math.floor(timeDifference / (60 * 60 * 24 * 365)) > 0
-      ? `${Math.floor(timeDifference / (60 * 60 * 24 * 365))} 年前`
+      ? new Date(time).toLocaleDateString().replace(/\//g, "-")
       : null
   const month =
     Math.floor(timeDifference / (60 * 60 * 24 * 30)) > 0
-      ? `${Math.floor(timeDifference / (60 * 60 * 24 * 30))} 个月前`
+      ? `${Math.floor(
+          timeDifference / (60 * 60 * 24 * 30)
+        )} 个月前 ( ${new Date(time)
+          .toLocaleDateString()
+          .replace(/\//g, "-")} )`
       : null
   const day =
     Math.floor(timeDifference / (60 * 60 * 24)) > 0
