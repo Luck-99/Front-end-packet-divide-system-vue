@@ -1,4 +1,5 @@
 import axios from "axios"
+import Router from "../router/index"
 
 const codeMessage: object | any = {
   200: "服务器成功返回请求的数据。",
@@ -28,9 +29,9 @@ const instance = axios.create()
 
 // 添加请求拦截器
 instance.interceptors.request.use(
-  (config) => {
+  (config: any) => {
     // 在发送请求之前做些什么
-    console.log(config)
+    // console.log(config)
     return config
   },
   (error) => {
@@ -61,6 +62,10 @@ instance.interceptors.response.use(
     const {
       response: { status },
     } = error
+    if (status === 401) {
+      Router.replace("/login")
+    }
+
     error.msg = codeMessage[status]
     // 对响应错误做点什么
     return Promise.reject(error)

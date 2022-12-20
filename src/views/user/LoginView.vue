@@ -31,6 +31,7 @@
 </template>
 
 <script>
+import { login } from "@/services/user"
 export default {
   name: "LoginView",
   data() {
@@ -53,14 +54,14 @@ export default {
   },
   methods: {
     login(formName) {
-      this.$refs[formName].validate((valid) => {
+      this.$refs[formName].validate(async (valid) => {
         if (valid) {
           this.loading = true
-          // console.log(this.user.username, this.user.password)
-          setTimeout(() => {
-            this.loading = false
+          const res = await login({ ...this.user })
+          if (res.code > 0) {
             this.$router.push({ path: "/DashBoard" })
-          }, 1000)
+          }
+          this.loading = false
         } else {
           return false
         }
