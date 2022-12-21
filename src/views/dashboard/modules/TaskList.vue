@@ -33,7 +33,7 @@
             style="color: red"
             v-show="scope.row.building"
             :disabled="!scope.row.building"
-            @click.stop="handleStopBuildJob(scope.row.id)"
+            @click.stop="handleStopBuildJob(scope.row.id, scope.row.key)"
           ></el-button>
           <el-button
             icon="el-icon-download"
@@ -94,8 +94,8 @@ export default {
       const res = await downloadFile()
       downLoadFile(res, `${name}.zip`)
     },
-    async handleStopBuildJob(id) {
-      const res = await stopBuildJob({ id })
+    async handleStopBuildJob(id, projectName) {
+      const res = await stopBuildJob({ id, projectName })
       this.$message({
         message: res.msg,
         type: res.code > 0 ? "success" : "error",
