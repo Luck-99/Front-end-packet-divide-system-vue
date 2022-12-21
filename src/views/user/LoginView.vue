@@ -22,7 +22,7 @@
             type="primary"
             @click="login('userForm')"
             :loading="loading"
-            >提交</el-button
+            >登录</el-button
           >
         </el-form-item>
       </el-form>

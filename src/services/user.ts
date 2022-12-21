@@ -11,3 +11,27 @@ export const login = async (params: { username: string; password: string }) => {
     data: params,
   })
 }
+
+/**
+ * 注销登录
+ * @param params 空
+ * @returns
+ */
+export const logout = async (params: null) => {
+  return request("/logout", {
+    method: "POST",
+    data: params,
+  })
+}
+
+/**
+ * 获取成员列表
+ * @param params 空
+ * @returns 成员列表
+ */
+export const getMembers = async (params: null) => {
+  return request("/getMembers", {
+    method: "GET",
+    params,
+  })
+}
