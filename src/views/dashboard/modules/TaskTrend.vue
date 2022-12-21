@@ -17,6 +17,9 @@
             >
             <span>{{ ` ${i.actionDec} ` }}</span>
             <span class="primaryColor">{{ i.action }}</span>
+            <span style="margin: 0 14px">{{
+              i.buildId ? `#${i.buildId}` : ""
+            }}</span>
           </div>
           <div class="list-time">
             {{ getTimeGap(i.time) }}
