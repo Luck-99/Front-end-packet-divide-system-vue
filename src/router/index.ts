@@ -23,6 +23,7 @@ const routes: Array<RouteConfig> = [
     path: "/",
     name: "home",
     component: () => import("@/views/HomeView.vue"),
+    redirect: "/dashBoard",
   },
   {
     path: "/about",
