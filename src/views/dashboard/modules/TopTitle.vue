@@ -2,8 +2,8 @@
   <div class="topContent">
     <div class="topTitle">{{ title }}</div>
     <div class="topAvatar">
-      <el-avatar :src="circleUrl" />
-      <span>{{ name }}</span>
+      <el-avatar :src="userInfo?.avaUrl" />
+      <span>{{ userInfo?.name }}</span>
     </div>
   </div>
 </template>
@@ -17,6 +17,7 @@ export default {
       circleUrl:
         "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
       name: "东东",
+      userInfo: this.$store.getters.userInfo,
     }
   },
   methods: {},
