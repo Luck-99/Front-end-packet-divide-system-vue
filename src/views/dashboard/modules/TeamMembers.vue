@@ -1,7 +1,7 @@
 <template>
   <div class="dash-borard-team-members">
     <div class="top-title borderBottom">{{ title }}</div>
-    <div v-for="i in trendList" :key="i.id" class="team-content">
+    <div v-for="i in members" :key="i.id" class="team-content">
       <el-avatar :src="i.avaUrl" :style="{ marginRight: '14px' }" />
       <div>{{ i.name }}</div>
     </div>
@@ -9,31 +9,26 @@
 </template>
 
 <script>
+import { getMembers } from "@/services/user"
 export default {
   components: {},
   name: "TeamMembers",
   data() {
     return {
       title: "团队成员",
-      trendList: [
-        {
-          id: 1,
-          avaUrl:
-            "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
-          name: "东东",
-        },
-        {
-          id: 2,
-          avaUrl:
-            "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
-          name: "张三",
-        },
-      ],
+      members: [],
     }
   },
-  methods: {},
+  methods: {
+    async getMembers() {
+      const res = await getMembers()
+      if (res.code > 0) {
+        this.members = res.data
+      }
+    },
+  },
   mounted() {
-    console.log(11)
+    this.getMembers()
   },
 }
 </script>
