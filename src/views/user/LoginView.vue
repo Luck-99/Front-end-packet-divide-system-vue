@@ -59,7 +59,6 @@ export default {
           this.loading = true
           const res = await login({ ...this.user })
           if (res.code > 0) {
-            this.$store.commit("setUserInfo", res.data)
             this.$router.push({ path: "/DashBoard" })
           }
           this.loading = false

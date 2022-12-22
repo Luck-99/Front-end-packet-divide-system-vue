@@ -35,3 +35,15 @@ export const getMembers = async (params: null) => {
     params,
   })
 }
+
+/**
+ * 获取用户信息
+ * @param params 空
+ * @returns 获取用户信息
+ */
+export const getUserInfo = async (params: null) => {
+  return request("/getUserInfo", {
+    method: "GET",
+    params,
+  })
+}

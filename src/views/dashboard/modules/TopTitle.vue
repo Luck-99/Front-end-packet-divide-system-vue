@@ -9,18 +9,26 @@
 </template>
 
 <script>
+import { getUserInfo } from "@/services/user"
 export default {
   name: "TopTitle",
   data() {
     return {
       title: "分组分治打包系统",
-      circleUrl:
-        "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
-      name: "东东",
       userInfo: this.$store.getters.userInfo,
     }
   },
-  methods: {},
+  methods: {
+    async getUserInfo() {
+      const res = await getUserInfo()
+      if (res.code > 0) {
+        this.$store.commit("setUserInfo", res.data)
+      }
+    },
+  },
+  mounted() {
+    this.getUserInfo()
+  },
 }
 </script>
 
