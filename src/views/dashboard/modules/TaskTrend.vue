@@ -4,7 +4,7 @@
     <div class="dash-borard-task-trend-list">
       <div
         v-for="i in recordList"
-        :key="i.id"
+        :key="i.time"
         class="list-content borderBottom"
       >
         <el-avatar :src="i.avaUrl" :style="{ marginRight: '14px' }" />

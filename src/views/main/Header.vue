@@ -1,17 +1,17 @@
 <template>
-  <div class="topContent">
-    <div class="topTitle">{{ title }}</div>
+  <header class="main-header borderBottom">
+    <div class="main-header-title">{{ title }}</div>
     <div class="topAvatar">
-      <el-avatar :src="userInfo?.avaUrl" />
+      <el-avatar :src="userInfo?.avaUrl" size="medium" />
       <span>{{ userInfo?.name }}</span>
     </div>
-  </div>
+  </header>
 </template>
 
 <script>
 import { getUserInfo } from "@/services/user"
 export default {
-  name: "TopTitle",
+  name: "Header",
   data() {
     return {
       title: "分组分治打包系统",
@@ -33,19 +33,22 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.topContent {
+.main-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: #fff;
-  height: 50px;
-  .topTitle {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 99;
+  box-sizing: border-box;
+  .main-header-title {
     display: flex;
     align-items: center;
-    background-color: #00284d;
-    color: #fff;
+    color: black;
     padding: 14px;
-    height: 100%;
     box-sizing: border-box;
   }
   .topAvatar {

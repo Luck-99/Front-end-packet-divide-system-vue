@@ -1,9 +1,5 @@
 <template>
   <div id="app">
-    <!-- <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </nav> -->
     <router-view />
   </div>
 </template>
@@ -37,6 +33,10 @@ export default {
 </script>
 
 <style lang="less">
+body {
+  margin: 0;
+  padding: 0;
+}
 #app {
   font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
     "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
@@ -77,19 +77,6 @@ export default {
     border-radius: 10px !important;
     box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2) !important;
     background: #ededed !important;
-  }
-}
-
-nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
   }
 }
 </style>
