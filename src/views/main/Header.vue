@@ -1,15 +1,25 @@
 <template>
   <header class="main-header borderBottom">
     <div class="main-header-title">{{ title }}</div>
-    <div class="topAvatar">
-      <el-avatar :src="userInfo?.avaUrl" size="medium" />
-      <span>{{ userInfo?.name }}</span>
-    </div>
+    <el-dropdown trigger="click" @command="handleUserClick">
+      <div class="main-header-avatar">
+        <el-avatar :src="userInfo?.avaUrl" size="small" />
+        <span style="margin-left: 7px">{{ userInfo?.name }}</span>
+      </div>
+      <el-dropdown-menu slot="dropdown">
+        <el-dropdown-item icon="el-icon-edit" command="edit"
+          >信息修改</el-dropdown-item
+        >
+        <el-dropdown-item icon="el-icon-switch-button" divided command="logout"
+          >注销</el-dropdown-item
+        >
+      </el-dropdown-menu>
+    </el-dropdown>
   </header>
 </template>
 
 <script>
-import { getUserInfo } from "@/services/user"
+import { getUserInfo, logout } from "@/services/user"
 export default {
   name: "Header",
   data() {
@@ -23,6 +33,25 @@ export default {
       const res = await getUserInfo()
       if (res.code > 0) {
         this.$store.commit("setUserInfo", res.data)
+      }
+    },
+    async logout() {
+      const res = await logout()
+      if (res.code > 0) {
+        this.$router.replace("/login")
+      }
+    },
+    async edit() {
+      console.log("edit")
+    },
+    handleUserClick(command) {
+      switch (command) {
+        case "logout":
+          return this.logout()
+        case "edit":
+          return this.edit()
+        default:
+          break
       }
     },
   },
@@ -51,10 +80,11 @@ export default {
     padding: 14px;
     box-sizing: border-box;
   }
-  .topAvatar {
+  .main-header-avatar {
     align-items: center;
     display: flex;
     margin-right: 14px;
+    cursor: pointer;
   }
 }
 </style>
