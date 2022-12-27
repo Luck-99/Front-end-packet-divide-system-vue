@@ -27,7 +27,7 @@ export default {
 <style lang="less">
 .dash-board {
   background: #f0f2f5;
-  padding-top: 14px;
+  padding: 14px;
   display: flex;
   .left {
     flex: 1;

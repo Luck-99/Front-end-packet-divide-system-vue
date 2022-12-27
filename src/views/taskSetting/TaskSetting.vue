@@ -1,10 +1,6 @@
 <template>
   <div class="task-setting">
-    <top-info
-      :envName="envName"
-      :personName="personName"
-      :creatTime="creatTime"
-    />
+    <top-info />
     <version-selection />
     <bottom-button />
   </div>
@@ -18,11 +14,7 @@ export default {
   components: { TopInfo, VersionSelection, BottomButton },
   name: "TaskSetting",
   data() {
-    return {
-      envName: "开发环境",
-      personName: "东东",
-      creatTime: new Date().toLocaleString(),
-    }
+    return {}
   },
 }
 </script>

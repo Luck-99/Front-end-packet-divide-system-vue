@@ -42,7 +42,7 @@ export default {
       })
       if (packageRes.code > 0) {
         this.allPackages = packageRes.data.filter((item) =>
-          item.name.includes("@zglib/product")
+          item.name.includes("@zglib/product-system")
         )
       }
       if (tempEnvRes.code > 0) {
@@ -99,7 +99,7 @@ export default {
     padding: 7px 0;
     text-align: start;
     .package-name {
-      width: 350px;
+      width: 400px;
       display: inline-block;
       text-align: end;
       margin-right: 14px;
