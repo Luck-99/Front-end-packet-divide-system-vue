@@ -2,7 +2,7 @@
   <div class="task-setting-version-selection">
     <div class="top-title borderBottom">{{ title }}</div>
     <div v-for="i in allPackages" :key="i._id" class="packages-list">
-      <span class="package-name">{{ i.name }}</span>
+      <span class="package-name">{{ filterLabel(i.name) }}</span>
       <el-select
         v-model="i.version"
         filterable
@@ -68,6 +68,9 @@ export default {
         }
         this.selectLoading = false
       }
+    },
+    filterLabel: (label) => {
+      return label?.replace("@zglib/", "")
     },
   },
   mounted() {
