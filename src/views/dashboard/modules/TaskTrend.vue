@@ -1,7 +1,7 @@
 <template>
   <div class="dash-borard-task-trend">
     <div class="top-title borderBottom">{{ title }}</div>
-    <div class="dash-borard-task-trend-list">
+    <div class="dash-borard-task-trend-list" v-if="recordList?.length">
       <div
         v-for="i in recordList"
         :key="i.time"
@@ -27,6 +27,7 @@
         </div>
       </div>
     </div>
+    <el-empty v-else description="没有进行过构建"></el-empty>
   </div>
 </template>
 

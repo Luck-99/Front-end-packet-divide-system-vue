@@ -1,7 +1,7 @@
 <template>
   <div class="dash-borard-task-list">
     <div class="top-title borderBottom">{{ title }}</div>
-    <el-table :data="allJobs" :show-header="false">
+    <el-table v-if="allJobs?.length" :data="allJobs" :show-header="false">
       <el-table-column prop="" label="占位用的" width="10px"> </el-table-column>
       <el-table-column prop="description" label="描述"> </el-table-column>
       <el-table-column prop="builtBy" label="构建用户"></el-table-column>
@@ -51,6 +51,7 @@
         </template>
       </el-table-column>
     </el-table>
+    <el-empty v-else description="没有建立任务"></el-empty>
   </div>
 </template>
 
@@ -82,6 +83,7 @@ export default {
     },
     async handleBuildClick(projectName) {
       const res = await buildWithParameters({ projectName })
+      console.log(res)
       if (res.code > 0) {
         this.getAllProjects()
       }
@@ -90,9 +92,9 @@ export default {
         type: res.code > 0 ? "success" : "error",
       })
     },
-    async handleDownLoadClick(name) {
-      const res = await downloadFile()
-      downLoadFile(res, `${name}.zip`)
+    async handleDownLoadClick(name, id) {
+      const res = await downloadFile({ downloadTarget: name })
+      downLoadFile(res, `${name}${id ?? ""}.zip`)
     },
     async handleStopBuildJob(id, projectName) {
       const res = await stopBuildJob({ id, projectName })
@@ -114,8 +116,9 @@ export default {
     jenkinsAllJobs(allJobs) {
       this.allJobs = JSON.parse(allJobs)
     },
-    jenkinsFileDownLoad(env) {
-      this.handleDownLoadClick(env)
+    jenkinsFileDownLoad(data) {
+      const { envName, id } = data
+      this.handleDownLoadClick(envName, id)
     },
   },
 }

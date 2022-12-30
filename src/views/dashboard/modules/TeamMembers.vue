@@ -1,10 +1,13 @@
 <template>
   <div class="dash-borard-team-members">
     <div class="top-title borderBottom">{{ title }}</div>
-    <div v-for="i in members" :key="i.id" class="team-content">
-      <el-avatar :src="i.avaUrl" :style="{ marginRight: '14px' }" />
-      <div>{{ i.name }}</div>
+    <div v-if="members?.length">
+      <div v-for="i in members" :key="i.id" class="team-content">
+        <el-avatar :src="i.avaUrl" :style="{ marginRight: '14px' }" />
+        <div>{{ i.name }}</div>
+      </div>
     </div>
+    <el-empty v-else description="没有团队人员"></el-empty>
   </div>
 </template>
 
