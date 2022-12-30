@@ -118,7 +118,7 @@ export default {
     },
     jenkinsFileDownLoad(data) {
       const { envName, id } = data
-      this.handleDownLoadClick(envName, id)
+      // this.handleDownLoadClick(envName, id)  自动下载有问题，暂时不处理
     },
   },
 }
