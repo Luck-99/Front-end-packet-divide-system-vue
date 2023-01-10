@@ -72,12 +72,18 @@ export async function downloadFile(params: {
 
 /**
  * 用于停止正在构建的项目
- * @param params id: 项目构建id
+ * @param id: 项目构建id
+ * @param queueId: 项目构建的队列id
+ * @param projectName: 项目名称
  * @returns
  */
-export async function stopBuildJob(params: { id: string }): Promise<any> {
+export async function stopBuildJob(params: {
+  id: string
+  queueId: string
+  projectName: string
+}): Promise<any> {
   return request("/jenkins/stopBuildJob", {
-    method: "GET",
-    params,
+    method: "POST",
+    data: params,
   })
 }
