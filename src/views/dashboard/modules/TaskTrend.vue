@@ -7,7 +7,10 @@
         :key="i.time"
         class="list-content borderBottom"
       >
-        <el-avatar :src="i.avaUrl" :style="{ marginRight: '14px' }" />
+        <el-avatar
+          src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png"
+          :style="{ marginRight: '14px' }"
+        />
         <div>
           <div>
             <span>{{ i.userName }}</span
