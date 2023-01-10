@@ -33,7 +33,9 @@
             style="color: red"
             v-show="scope.row.building"
             :disabled="!scope.row.building"
-            @click.stop="handleStopBuildJob(scope.row.id, scope.row.key)"
+            @click.stop="
+              handleStopBuildJob(scope.row.queueId, scope.row.id, scope.row.key)
+            "
           ></el-button>
           <el-button
             icon="el-icon-download"
@@ -83,7 +85,6 @@ export default {
     },
     async handleBuildClick(projectName) {
       const res = await buildWithParameters({ projectName })
-      console.log(res)
       if (res.code > 0) {
         this.getAllProjects()
       }
@@ -96,8 +97,8 @@ export default {
       const res = await downloadFile({ downloadTarget: name })
       downLoadFile(res, `${name}${id ?? ""}.zip`)
     },
-    async handleStopBuildJob(id, projectName) {
-      const res = await stopBuildJob({ id, projectName })
+    async handleStopBuildJob(queueId, id, projectName) {
+      const res = await stopBuildJob({ queueId, id, projectName })
       this.$message({
         message: res.msg,
         type: res.code > 0 ? "success" : "error",
