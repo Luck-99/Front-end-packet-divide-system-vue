@@ -1,8 +1,8 @@
 <template>
-  <div class="task-setting-bottom-button">
+  <footer class="task-setting-bottom-button">
     <el-button type="primary" @click="handleApplyConfig">应用配置</el-button>
     <el-button @click="$router.back()">返回</el-button>
-  </div>
+  </footer>
 </template>
 
 <script>
