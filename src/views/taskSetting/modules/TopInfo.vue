@@ -1,7 +1,10 @@
 <template>
   <div class="task-setting-top-info">
     <div>
-      <el-avatar :src="avaUrl" :style="{ marginRight: '14px' }" />
+      <el-avatar
+        :src="envInfo.icon ?? avaUrl"
+        :style="{ marginRight: '14px' }"
+      />
     </div>
     <div class="info">
       <div>{{ envInfo.description }}</div>
@@ -9,6 +12,12 @@
       <div>
         创建时间：{{
           new Date(envInfo.creatTime).toLocaleDateString().replace(/\//g, "-")
+        }}
+      </div>
+      <div>修改人: {{ envInfo.updateBy }}</div>
+      <div>
+        修改时间：{{
+          new Date(envInfo.updateTime).toLocaleString().replace(/\//g, "-")
         }}
       </div>
     </div>
@@ -37,6 +46,9 @@ export default {
   padding: 14px;
   align-items: center;
   .info {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
     text-align: start;
   }
 }
