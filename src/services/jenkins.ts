@@ -87,3 +87,15 @@ export async function stopBuildJob(params: {
     data: params,
   })
 }
+
+/**
+ * 获取构建日志
+ * @param id: 构建id
+ * @returns 构建日志
+ */
+export async function getBuildLog(params: { id: string }): Promise<any> {
+  return request("/jenkins/getBuildLog", {
+    method: "GET",
+    params,
+  })
+}
