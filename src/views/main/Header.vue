@@ -3,7 +3,7 @@
     <div class="main-header-title">{{ title }}</div>
     <el-dropdown trigger="click" @command="handleUserClick">
       <div class="main-header-avatar">
-        <el-avatar :src="userInfo?.avaUrl" size="small" />
+        <el-avatar :src="userInfo?.avaUrl ?? defaultAvaUrl" size="small" />
         <span style="margin-left: 7px">{{ userInfo?.name }}</span>
       </div>
       <el-dropdown-menu slot="dropdown">
@@ -24,6 +24,8 @@ export default {
   name: "Header",
   data() {
     return {
+      defaultAvaUrl:
+        "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
       title: "分组分治打包系统",
       userInfo: this.$store.getters.userInfo,
     }
