@@ -2,7 +2,11 @@
   <div class="task-setting-version-selection">
     <div class="top-title borderBottom">{{ title }}</div>
     <div v-for="i in allPackages" :key="i._id" class="packages-list">
-      <span class="package-name">{{ filterLabel(i.name) }}</span>
+      <span
+        class="package-name"
+        @click="getPackageReadme(i.name, i.version, i.description)"
+        >{{ filterLabel(i.name) }}</span
+      >
       <el-select
         v-model="i.version"
         filterable
@@ -18,11 +22,24 @@
         </el-option>
       </el-select>
     </div>
+    <el-dialog
+      custom-class="package-readme-dialog"
+      :center="true"
+      top="10vh"
+      :title="dialog.title"
+      :visible.sync="dialog.visible"
+    >
+      <div class="markdown-body" v-html="dialog.info"></div>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-import { getAllPackages, getPackageInfo } from "@/services/verdaccio"
+import {
+  getAllPackages,
+  getPackageInfo,
+  getPackageReadme,
+} from "@/services/verdaccio"
 import { getEnvDeps } from "@/services/file"
 export default {
   name: "VersionSelection",
@@ -32,6 +49,11 @@ export default {
       allPackages: [],
       selectLoading: false,
       options: {},
+      dialog: {
+        title: "",
+        visible: false,
+        info: "",
+      },
     }
   },
   methods: {
@@ -67,6 +89,14 @@ export default {
           this.options[name] = versions
         }
         this.selectLoading = false
+      }
+    },
+    async getPackageReadme(name, version, description) {
+      const res = await getPackageReadme({ name, version })
+      if (res.code > 0) {
+        this.dialog.info = res.data
+        this.dialog.title = `${description} V${version}`
+        this.dialog.visible = true
       }
     },
     filterLabel: (label) => {
@@ -106,6 +136,31 @@ export default {
       display: inline-block;
       text-align: end;
       margin-right: 14px;
+      cursor: pointer;
+    }
+  }
+  ::v-deep .package-readme-dialog {
+    width: 80%;
+    max-height: 80%;
+    ::-webkit-scrollbar {
+      display: none;
+    }
+    .el-dialog__body {
+      white-space: pre-line;
+      overflow: scroll;
+      padding: 0 7px 7px;
+      max-height: 600px;
+      .markdown-body {
+        blockquote,
+        h1,
+        h2,
+        h3,
+        ul,
+        ol,
+        p {
+          margin: 0;
+        }
+      }
     }
   }
 }
