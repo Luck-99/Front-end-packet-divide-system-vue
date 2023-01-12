@@ -14,7 +14,7 @@
         :loading="selectLoading"
       >
         <el-option
-          v-for="item in options[i.name]"
+          v-for="item in packageOptions[i.name]"
           :key="item"
           :label="item"
           :value="item"
@@ -48,7 +48,7 @@ export default {
       title: "依赖包版本选择",
       allPackages: [],
       selectLoading: false,
-      options: {},
+      packageOptions: {},
       dialog: {
         title: "",
         visible: false,
@@ -80,13 +80,13 @@ export default {
       }
     },
     async getPackageInfo(show, name) {
-      if (show && !this.options[name]) {
+      if (show && !this.packageOptions[name]) {
         this.selectLoading = true
         const res = await getPackageInfo({ name })
         if (res.code > 0) {
           const tempVersion = res.data.versions
           const versions = Object.keys(tempVersion)
-          this.options[name] = versions
+          this.packageOptions[name] = versions
         }
         this.selectLoading = false
       }
