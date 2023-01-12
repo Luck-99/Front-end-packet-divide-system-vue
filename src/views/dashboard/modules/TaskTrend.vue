@@ -20,9 +20,12 @@
             >
             <span>{{ ` ${i.actionDec} ` }}</span>
             <span class="primaryColor">{{ i.action }}</span>
-            <span style="margin: 0 14px">{{
-              i.buildId ? `#${i.buildId}` : ""
-            }}</span>
+            <span
+              style="margin: 0 14px; cursor: pointer"
+              @click="getBuildLog(i.envName, i.buildId)"
+              v-if="i.buildId"
+              >{{ `#${i.buildId}` }}</span
+            >
           </div>
           <div class="list-time">
             {{ getTimeGap(i.time) }}
@@ -31,12 +34,22 @@
       </div>
     </div>
     <el-empty v-else description="没有进行过构建"></el-empty>
+    <el-dialog
+      custom-class="my-dialog"
+      :center="true"
+      top="10vh"
+      :title="dialog.title"
+      :visible.sync="dialog.visible"
+    >
+      {{ dialog.info }}
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import { getTimeGap } from "@/utils/utils"
 import { getActionRecordList } from "@/services/file"
+import { getBuildLog } from "@/services/jenkins"
 
 export default {
   components: {},
@@ -45,6 +58,11 @@ export default {
     return {
       title: "动态",
       recordList: [],
+      dialog: {
+        title: "",
+        visible: false,
+        info: "",
+      },
     }
   },
   methods: {
@@ -53,6 +71,14 @@ export default {
       const res = await getActionRecordList()
       if (res.code > 0) {
         this.recordList = res.data
+      }
+    },
+    async getBuildLog(envName, id) {
+      const res = await getBuildLog({ id })
+      if (res.code > 0) {
+        this.dialog.info = res.data
+        this.dialog.title = `${envName}\t${id}`
+        this.dialog.visible = true
       }
     },
   },
@@ -87,6 +113,19 @@ export default {
         text-align: start;
         color: #a5a5a5;
       }
+    }
+  }
+  ::v-deep .my-dialog {
+    width: 80%;
+    max-height: 80%;
+    ::-webkit-scrollbar {
+      display: none;
+    }
+    .el-dialog__body {
+      white-space: pre-line;
+      overflow: scroll;
+      padding: 0 7px 7px;
+      max-height: 600px;
     }
   }
 }
