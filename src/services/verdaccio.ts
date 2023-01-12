@@ -22,3 +22,19 @@ export async function getPackageInfo(params: { name: string }): Promise<any> {
     params,
   })
 }
+
+/**
+ * 获取包的readme文件
+ * @param name 包名
+ * @param version 版本号
+ * @returns readme内容
+ */
+export async function getPackageReadme(params: {
+  name: string
+  version: string
+}): Promise<any> {
+  return request("/verdaccio/getPackageReadme", {
+    method: "GET",
+    params,
+  })
+}
