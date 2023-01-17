@@ -48,3 +48,19 @@ export async function getActionRecordList(): Promise<any> {
     method: "GET",
   })
 }
+
+/**
+ * 进出环境设置
+ * @param envKey :string 项目的key
+ * @param isLeave :boolean 是否离开
+ * @returns 已经进入的成员名单
+ */
+export async function environmentSetting(params: {
+  envKey: string
+  isLeave: boolean
+}): Promise<any> {
+  return request("/file/environmentSetting", {
+    method: "GET",
+    params,
+  })
+}
