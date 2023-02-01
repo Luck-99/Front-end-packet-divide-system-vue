@@ -47,3 +47,19 @@ export const getUserInfo = async (params: null) => {
     params,
   })
 }
+
+/**
+ * 更改用户密码
+ * @param oldPassWord 旧密码
+ * @param newPassWord 新密码
+ * @returns
+ */
+export const changePassWord = async (params: {
+  oldPassWord: string
+  newPassWord: string
+}) => {
+  return request("/user/changePassWord", {
+    method: "POST",
+    data: params,
+  })
+}
