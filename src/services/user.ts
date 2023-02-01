@@ -6,7 +6,7 @@ import { request } from "../utils/axios"
  * @returns 登录成功的token
  */
 export const login = async (params: { username: string; password: string }) => {
-  return request("/login", {
+  return request("/user/login", {
     method: "POST",
     data: params,
   })
@@ -18,7 +18,7 @@ export const login = async (params: { username: string; password: string }) => {
  * @returns
  */
 export const logout = async (params: null) => {
-  return request("/logout", {
+  return request("/user/logout", {
     method: "POST",
     data: params,
   })
@@ -30,7 +30,7 @@ export const logout = async (params: null) => {
  * @returns 成员列表
  */
 export const getMembers = async (params: null) => {
-  return request("/getMembers", {
+  return request("/user/getMembers", {
     method: "GET",
     params,
   })
@@ -42,7 +42,7 @@ export const getMembers = async (params: null) => {
  * @returns 获取用户信息
  */
 export const getUserInfo = async (params: null) => {
-  return request("/getUserInfo", {
+  return request("/user/getUserInfo", {
     method: "GET",
     params,
   })
