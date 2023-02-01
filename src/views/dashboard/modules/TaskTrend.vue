@@ -35,7 +35,7 @@
     </div>
     <el-empty v-else description="没有进行过构建"></el-empty>
     <el-dialog
-      custom-class="my-dialog"
+      custom-class="task-trend-dialog"
       :center="true"
       top="10vh"
       :title="dialog.title"
@@ -115,7 +115,7 @@ export default {
       }
     }
   }
-  ::v-deep .my-dialog {
+  ::v-deep .task-trend-dialog {
     width: 80%;
     max-height: 80%;
     ::-webkit-scrollbar {
