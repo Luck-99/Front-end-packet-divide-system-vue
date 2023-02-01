@@ -15,8 +15,8 @@ Vue.use(Element, { size: "small", zIndex: 3000 })
 
 Vue.use(
   new VueSocketio({
-    debug: true,
-    connection: "http://127.0.0.1:7002/",
+    debug: false,
+    connection: "http://127.0.0.1:7222/",
   })
 )
 
