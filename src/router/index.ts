@@ -30,7 +30,9 @@ const routes: Array<RouteConfig> = [
 ]
 
 const router = new VueRouter({
+  mode: "history",
   routes,
+  base: "/html",
 })
 
 // router.beforeEach((to, from, next) => {
