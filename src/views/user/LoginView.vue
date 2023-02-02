@@ -15,6 +15,7 @@
             type="password"
             placeholder="请输入密码"
             v-model="user.password"
+            @keydown.enter.native="login('userForm')"
           ></el-input>
         </el-form-item>
         <el-form-item>
@@ -60,6 +61,8 @@ export default {
           const res = await login({ ...this.user })
           if (res.code > 0) {
             this.$router.push({ path: "/DashBoard" })
+          } else {
+            this.$message.error(res.msg)
           }
           this.loading = false
         } else {
