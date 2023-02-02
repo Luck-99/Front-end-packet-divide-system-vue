@@ -1,5 +1,6 @@
 import axios from "axios"
 import Router from "../router/index"
+import { Notification } from "element-ui"
 
 const codeMessage: object | any = {
   200: "服务器成功返回请求的数据。",
@@ -49,7 +50,10 @@ instance.interceptors.response.use(
       const { data, status } = response
       data.status = status
       if (data.code < 0) {
-        console.log(`请求错误 ${data.code}`)
+        Notification.error({
+          title: "请求出错",
+          message: data.msg,
+        })
       }
       return data
     } catch (e) {
@@ -65,7 +69,6 @@ instance.interceptors.response.use(
     if (status === 401) {
       Router.replace("/login")
     }
-
     error.msg = codeMessage[status]
     // 对响应错误做点什么
     return Promise.reject(error)
