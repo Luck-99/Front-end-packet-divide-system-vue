@@ -38,17 +38,18 @@ export default {
     async getUserInfo() {
       const res = await getUserInfo()
       if (res.code > 0) {
+        this.userInfo = res.data
         this.$store.commit("setUserInfo", res.data)
       }
     },
     async logout() {
       const res = await logout()
       if (res.code > 0) {
+        if (sessionStorage.getItem("front-end-packet-divide-system-store")) {
+          sessionStorage.removeItem("front-end-packet-divide-system-store")
+        }
         this.$router.replace("/login")
       }
-    },
-    async changePassWord() {
-      console.log(this.dialog)
     },
     handleUserClick(command) {
       switch (command) {
@@ -62,7 +63,7 @@ export default {
       }
     },
   },
-  mounted() {
+  created() {
     this.getUserInfo()
   },
 }
