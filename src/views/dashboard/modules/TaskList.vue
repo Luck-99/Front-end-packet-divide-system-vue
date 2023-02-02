@@ -40,8 +40,9 @@
           <el-button
             icon="el-icon-download"
             circle
-            title="下载文件"
+            :title="scope.row.id ? `下载文件` : `上次没有构建成功，无法下载`"
             :loading="scope.row.building"
+            :disabled="!scope.row.id"
             @click.stop="handleDownLoadClick(scope.row.description)"
           ></el-button>
           <el-button
