@@ -14,8 +14,16 @@
           }}</span>
           <span v-else>{{ "构建中" }}</span>
         </template> </el-table-column
-      ><el-table-column fixed="right" label="操作" width="150">
+      ><el-table-column fixed="right" label="操作" width="200" align="right">
         <template slot-scope="scope">
+          <el-button
+            icon="el-icon-view"
+            title="查看构建日志"
+            circle
+            class="primaryColor"
+            v-show="scope.row.building && scope.row.id"
+            @click.stop="getBuildLog(scope.row.description, scope.row.id)"
+          ></el-button>
           <el-button
             icon="el-icon-video-play"
             title="构建项目"
@@ -55,6 +63,15 @@
       </el-table-column>
     </el-table>
     <el-empty v-else description="没有建立任务"></el-empty>
+    <el-dialog
+      custom-class="task-trend-dialog"
+      :center="true"
+      top="10vh"
+      :title="dialog.title"
+      :visible.sync="dialog.visible"
+    >
+      {{ dialog.info }}
+    </el-dialog>
   </div>
 </template>
 
@@ -63,6 +80,7 @@ import {
   downloadFile,
   buildWithParameters,
   stopBuildJob,
+  getBuildLog,
 } from "@/services/jenkins"
 import { getProjects } from "@/services/file"
 import { downLoadFile, getTimeGap } from "@/utils/utils"
@@ -74,6 +92,11 @@ export default {
     return {
       title: "任务列表",
       allJobs: [],
+      dialog: {
+        title: "",
+        visible: false,
+        info: "",
+      },
     }
   },
   methods: {
@@ -104,6 +127,14 @@ export default {
         message: res.msg,
         type: res.code > 0 ? "success" : "error",
       })
+    },
+    async getBuildLog(envName, id) {
+      const res = await getBuildLog({ id })
+      if (res.code > 0) {
+        this.dialog.info = res.data
+        this.dialog.title = `${envName}\t${id}`
+        this.dialog.visible = true
+      }
     },
     handleEditEnvClick(row, column, event) {
       this.$store.commit("setEnvInfo", row)
@@ -139,6 +170,19 @@ export default {
   .top-title {
     text-align: left;
     padding: 14px;
+  }
+  :deep(.task-trend-dialog) {
+    width: 80%;
+    max-height: 80%;
+    ::-webkit-scrollbar {
+      display: none;
+    }
+    .el-dialog__body {
+      white-space: pre-line;
+      overflow: scroll;
+      padding: 0 7px 7px;
+      max-height: 600px;
+    }
   }
 }
 </style>
