@@ -115,7 +115,7 @@ export default {
       }
     }
   }
-  ::v-deep .task-trend-dialog {
+  :deep(.task-trend-dialog) {
     width: 80%;
     max-height: 80%;
     ::-webkit-scrollbar {

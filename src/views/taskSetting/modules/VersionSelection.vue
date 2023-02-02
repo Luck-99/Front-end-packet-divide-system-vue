@@ -139,7 +139,7 @@ export default {
       cursor: pointer;
     }
   }
-  ::v-deep .package-readme-dialog {
+  :deep(.package-readme-dialog) {
     width: 80%;
     max-height: 80%;
     ::-webkit-scrollbar {
