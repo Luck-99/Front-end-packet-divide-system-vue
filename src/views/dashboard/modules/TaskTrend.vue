@@ -11,8 +11,8 @@
           src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png"
           :style="{ marginRight: '14px' }"
         />
-        <div>
-          <div>
+        <div style="width: 100%">
+          <div style="text-align: left">
             <span>{{ i.userName }}</span
             ><span v-if="i.envName"
               >{{ ` 在 `
@@ -21,10 +21,11 @@
             <span>{{ ` ${i.actionDec} ` }}</span>
             <span class="primaryColor">{{ i.action }}</span>
             <span
-              style="margin: 0 14px; cursor: pointer"
+              style="margin: 0 14px; cursor: pointer; float: right"
+              class="primaryColor"
               @click="getBuildLog(i.envName, i.buildId)"
               v-if="i.buildId"
-              >{{ `#${i.buildId}` }}</span
+              >{{ "查看日志" }}</span
             >
           </div>
           <div class="list-time">
