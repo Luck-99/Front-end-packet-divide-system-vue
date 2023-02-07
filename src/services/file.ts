@@ -41,11 +41,19 @@ export async function getEnvDeps(params: { key: string }): Promise<any> {
 
 /**
  * 获取项目操作记录
+ * @param envKey 环境名的key
+ * @param startTime 开始时间
+ * @param endTime 结束时间
  * @returns 操作记录
  */
-export async function getActionRecordList(): Promise<any> {
+export async function getActionRecordList(params: {
+  envKey: string
+  startTime: number | string
+  endTime: number | string
+}): Promise<any> {
   return request("/file/getActionRecordList", {
-    method: "GET",
+    method: "POST",
+    data: params,
   })
 }
 
