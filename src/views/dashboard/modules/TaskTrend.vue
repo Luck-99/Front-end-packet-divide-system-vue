@@ -1,6 +1,11 @@
 <template>
   <div class="dash-borard-task-trend">
-    <div class="top-title borderBottom">{{ title }}</div>
+    <div class="top-title borderBottom">
+      <span>{{ title }}</span>
+      <span class="top-title-more" title="更多" @click="onMoreClick"
+        ><i class="el-icon-more"></i>
+      </span>
+    </div>
     <div class="dash-borard-task-trend-list" v-if="recordList?.length">
       <div
         v-for="i in recordList"
@@ -82,6 +87,9 @@ export default {
         this.dialog.visible = true
       }
     },
+    onMoreClick() {
+      this.$router.push({ path: "/TaskListDetail" })
+    },
   },
   mounted() {
     this.getActionLists()
@@ -100,6 +108,10 @@ export default {
   .top-title {
     text-align: left;
     padding: 14px;
+    .top-title-more {
+      cursor: pointer;
+      float: right;
+    }
   }
   .dash-borard-task-trend-list {
     max-height: 40vh;

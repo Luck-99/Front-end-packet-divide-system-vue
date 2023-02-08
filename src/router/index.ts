@@ -25,6 +25,11 @@ const routes: Array<RouteConfig> = [
         name: "taskSetting",
         component: () => import("@/views/taskSetting/TaskSetting.vue"),
       },
+      {
+        path: "taskListDetail",
+        name: "taskListDetail",
+        component: () => import("@/views/taskListDetail/TaskListDetail.vue"),
+      },
     ],
   },
 ]
