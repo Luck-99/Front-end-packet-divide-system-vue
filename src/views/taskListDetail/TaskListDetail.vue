@@ -63,6 +63,9 @@
             @click="handleSearch('taskListDetailSearchForm')"
             >查询</el-button
           >
+          <el-button @click="$refs['taskListDetailSearchForm'].resetFields()"
+            >重置</el-button
+          >
         </el-form-item>
       </el-form>
     </div>
