@@ -101,6 +101,7 @@ export default {
       if (this.searchForm.endTime && value && this.searchForm.endTime < value) {
         callback(new Error("开始时间不能大于结束时间"))
       }
+      callback()
     }
     const validateEndTime = (rule, value, callback) => {
       if (
@@ -110,6 +111,7 @@ export default {
       ) {
         callback(new Error("结束时间不能小于开始时间"))
       }
+      callback()
     }
     return {
       searchForm: {
