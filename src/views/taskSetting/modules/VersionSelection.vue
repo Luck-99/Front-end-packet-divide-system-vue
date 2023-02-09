@@ -8,10 +8,12 @@
         >{{ filterLabel(i.name) }}</span
       >
       <el-select
+        v-if="i.versionMode"
         v-model="i.version"
         filterable
         @visible-change="(e) => getPackageInfo(e, i.name)"
         :loading="selectLoading"
+        style="width: 200px"
       >
         <el-option
           v-for="item in packageOptions[i.name]"
@@ -21,6 +23,26 @@
         >
         </el-option>
       </el-select>
+      <el-input
+        v-else
+        v-model="i.gitUrl"
+        style="width: 300px"
+        placeholder="请输入git链接"
+      ></el-input>
+      <transition name="el-fade-in-linear">
+        <i
+          class="el-icon-info"
+          title="查看提交记录"
+          v-show="commitInfoIconShow"
+          @click="getPackageCommits(i.name, i.version)"
+        ></i
+      ></transition>
+      <!-- <el-switch
+        v-model="i.versionMode"
+        active-text="版本模式"
+        inactive-text="开发模式"
+      >
+      </el-switch> -->
     </div>
     <el-dialog
       custom-class="package-readme-dialog"
@@ -41,13 +63,16 @@ import {
   getPackageReadme,
 } from "@/services/verdaccio"
 import { getEnvDeps } from "@/services/file"
+import { getProjectsCommits } from "@/services/gitlab"
 export default {
   name: "VersionSelection",
   data() {
     return {
       title: "依赖包版本选择",
       allPackages: [],
+      allProjectCommits: {},
       selectLoading: false,
+      commitInfoIconShow: false,
       packageOptions: {},
       dialog: {
         title: "",
@@ -66,6 +91,7 @@ export default {
         this.allPackages = packageRes.data.filter((item) =>
           item.name.includes("@zglib/product-system")
         )
+        this.getAllProjectCommits(this.allPackages.map((item) => item.name))
       }
       if (tempEnvRes.code > 0) {
         for (const [key, value] of Object.entries(tempEnvRes.data)) {
@@ -74,6 +100,7 @@ export default {
             if (tempObj.name === key) {
               tempObj.version = value
             }
+            tempObj.versionMode = true
             return tempObj
           })
         }
@@ -99,11 +126,28 @@ export default {
         this.dialog.visible = true
       }
     },
+    async getAllProjectCommits(packages) {
+      const res = await getProjectsCommits({ packages, maxRecords: 20 })
+      if (res.code > 0) {
+        this.allProjectCommits = res.data
+        this.commitInfoIconShow = true
+      }
+    },
     filterLabel: (label) => {
       return label?.replace("@zglib/", "")
     },
+    getPackageCommits(tempProject, version) {
+      const project = tempProject.replace("@zglib/", "")
+      if (this.allProjectCommits[project][version]) {
+        this.dialog.info = this.allProjectCommits[project][version]
+          .map((item) => item.message)
+          .join("\n")
+        this.dialog.title = `${project} V${version}`
+        this.dialog.visible = true
+      }
+    },
   },
-  mounted() {
+  created() {
     this.getAllPackages()
   },
   watch: {
@@ -136,6 +180,10 @@ export default {
       display: inline-block;
       text-align: end;
       margin-right: 14px;
+      cursor: pointer;
+    }
+    .el-icon-info {
+      margin: 0 7px;
       cursor: pointer;
     }
   }
