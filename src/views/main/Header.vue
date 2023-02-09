@@ -1,6 +1,6 @@
 <template>
   <header class="main-header borderBottom">
-    <div class="main-header-title">{{ title }}</div>
+    <div class="main-header-title" @click="handleTitleClick">{{ title }}</div>
     <el-dropdown trigger="click" @command="handleUserClick">
       <div class="main-header-avatar">
         <el-avatar :src="userInfo?.avaUrl ?? defaultAvaUrl" size="small" />
@@ -51,6 +51,9 @@ export default {
         this.$router.replace("/login")
       }
     },
+    handleTitleClick() {
+      this.$router.replace("/DashBoard")
+    },
     handleUserClick(command) {
       switch (command) {
         case "logout":
@@ -82,6 +85,7 @@ export default {
   z-index: 99;
   box-sizing: border-box;
   .main-header-title {
+    cursor: pointer;
     display: flex;
     align-items: center;
     color: black;
